@@ -54,15 +54,15 @@ var game = {
     wins: 0,
     remainingGuesses: 12,
     lettersAlreadyGuessed: [],
-    setNewCurrentWord: function () {
+    setNewCurrentWord: function() {
         this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)]
         console.log("new currentWord is", this.currentWord)
     },
-    setRemainingGuesses: function () {
+    setRemainingGuesses: function() {
         this.remainingGuesses = 9 + this.currentWord.length
         console.log("new remainingGuesses is", this.remainingGuesses)
     },
-    setNewCorrectGuesses: function () {
+    setNewCorrectGuesses: function() {
         this.correctGuesses = []
         for (let index = 0; index < this.currentWord.length; index++) {
             const element = this.currentWord[index];
@@ -71,10 +71,10 @@ var game = {
         }
         console.log("new correctGuesses are:", this.correctGuesses)
     },
-    setNewLettersGuessed: function () {
+    setNewLettersGuessed: function() {
         this.lettersAlreadyGuessed = [];
     },
-    makeGuess: function (x) {
+    makeGuess: function(x) {
         if (this.lettersAlreadyGuessed.includes(x)) {
             console.log(x, "has already been guessed");
         } else if (this.currentWord.includes(x)) {
@@ -83,25 +83,34 @@ var game = {
             this.correctGuesses = addNewGuessedLetters(this.correctGuesses, this.currentWord, checkForLetter(this.currentWord, x));
             console.log("the new correctGuesses:", this.correctGuesses);
             console.log("the new lettersAlreadyGuessed:", this.lettersAlreadyGuessed);
+            this.remainingGuesses -= 1;
         } else {
             console.log(x, "is not found in the currentWord.");
             this.lettersAlreadyGuessed.push(x);
             console.log("the new lettersAlreadyGuessed:", this.lettersAlreadyGuessed);
+            this.remainingGuesses -= 1;
         }
-        this.remainingGuesses -= 1;
+
     },
-    checkForWin: function () {
+    checkForWin: function() {
         if (this.currentWord === this.correctGuesses.join("")) {
             return true;
         } else {
             return false;
         }
     },
-    main: function () {
+    main: function() {
         this.setNewCurrentWord();
         this.setRemainingGuesses();
         this.setNewCorrectGuesses();
         this.setNewLettersGuessed();
+    },
+    checkRemainingGuesses: function() {
+        if (this.remainingGuesses < 1) {
+            return false
+        } else {
+            return true
+        }
     }
 };
 
@@ -117,24 +126,30 @@ winsDisp.innerHTML += "<p>" + game.wins + "</p>";
 currWordDisp.innerHTML += "<p>" + game.correctGuesses.join(" ") + "</p>";
 guessesDisp.innerHTML += "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
 
-document.onkeyup = function (event) {
-    var userGuess = event.key;
-    game.makeGuess(userGuess);
-    winsDisp.innerHTML = "<p>" + game.wins + "</p>";
-    currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
-    guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-    if (game.checkForWin()) {
-        game.wins += 1;
-        game.main();
+document.onkeyup = function(event) {
+        var userGuess = event.key;
+        game.makeGuess(userGuess);
         winsDisp.innerHTML = "<p>" + game.wins + "</p>";
         currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
         guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+        if (game.checkForWin()) {
+            game.wins += 1;
+            game.main();
+            winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+            currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+            guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+        } else if (!game.checkRemainingGuesses()) {
+            alert("You are out of guesses! Play again!");
+            game.main();
+            winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+            currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+            guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+        }
     }
-}
-// random stuff for testing
-// var word = "dogg";
-// var correct_guesses = "____";
-// console.log("testing addNewGuessedLetters")
+    // random stuff for testing
+    // var word = "dogg";
+    // var correct_guesses = "____";
+    // console.log("testing addNewGuessedLetters")
 
 // console.log("The word to guess is", word)
 // console.log("The current known letters are:", correct_guesses)
