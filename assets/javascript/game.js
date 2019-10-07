@@ -48,7 +48,7 @@ function addNewGuessedLetters(x, y, z) {
 
 // main game object
 var game = {
-    wordList: ["dogg", "rodson", "cat"],
+    wordList: ["twice", "itzy", "blackpink", "red velvet", "mamamoo", "heize", "hyuna", "exid", "aoa", "apink", "sistar", "hwasa", "jennie", "jisoo", "lisa", "jihyo", "naeun", "mina", "sana", "tzuyu", "momo", "dahyun", "chaeyoung", "nayeon", "jeongyeon"],
     currentWord: "",
     correctGuesses: [],
     wins: 0,
