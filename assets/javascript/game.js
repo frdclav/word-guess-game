@@ -51,7 +51,7 @@ function allLetter(inputtxt) {
     var letters = /^[A-Za-z]+$/;
     var check = String(inputtxt);
     console.log(inputtxt, inputtxt.type)
-    if (check.match(letters)) {
+    if (check.match(letters) && check.length = 1) {
         console.log(inputtxt, "is a letter")
         return true;
     } else {
