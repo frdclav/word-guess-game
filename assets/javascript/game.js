@@ -73,7 +73,7 @@ var game = {
         console.log("new currentWord is", this.currentWord)
     },
     setRemainingGuesses: function() {
-        this.remainingGuesses = 9 + this.currentWord.length
+        this.remainingGuesses = 9
         console.log("new remainingGuesses is", this.remainingGuesses)
     },
     setNewCorrectGuesses: function() {
@@ -97,7 +97,7 @@ var game = {
             this.correctGuesses = addNewGuessedLetters(this.correctGuesses, this.currentWord, checkForLetter(this.currentWord, x));
             console.log("the new correctGuesses:", this.correctGuesses);
             console.log("the new lettersAlreadyGuessed:", this.lettersAlreadyGuessed);
-            this.remainingGuesses -= 1;
+            // this.remainingGuesses -= 1;
         } else {
             console.log(x, "is not found in the currentWord.");
             this.lettersAlreadyGuessed.push(x);
