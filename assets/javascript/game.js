@@ -45,6 +45,20 @@ function addNewGuessedLetters(x, y, z) {
         return oldArr;
     }
 }
+// check for letters only 
+
+function allLetter(inputtxt) {
+    var letters = /^[A-Za-z]+$/;
+    var check = String(inputtxt);
+    console.log(inputtxt, inputtxt.type)
+    if (check.match(letters)) {
+        console.log(inputtxt, "is a letter")
+        return true;
+    } else {
+        console.log(inputtxt, "is not a letter")
+        return false;
+    }
+}
 
 // main game object
 var game = {
@@ -94,6 +108,7 @@ var game = {
     },
     checkForWin: function() {
         if (this.currentWord === this.correctGuesses.join("")) {
+            alert("You win! The word was " + this.currentWord)
             return true;
         } else {
             return false;
@@ -119,6 +134,7 @@ var subHeader = document.getElementById("sub-header");
 var winsDisp = document.getElementById("winsDisp");
 var currWordDisp = document.getElementById("currWordDisp");
 var guessesDisp = document.getElementById("guessesDisp");
+var subHeaderDisp = document.getElementById("sub-header-text")
 
 game.main();
 
@@ -128,23 +144,29 @@ guessesDisp.innerHTML += "<p>Remaining guesses: " + game.remainingGuesses + "</p
 
 document.onkeyup = function(event) {
         var userGuess = event.key;
-        game.makeGuess(userGuess);
-        winsDisp.innerHTML = "<p>" + game.wins + "</p>";
-        currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
-        guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-        if (game.checkForWin()) {
-            game.wins += 1;
-            game.main();
+        if (allLetter(userGuess)) {
+            subHeaderDisp.textContent = `You guessed "${userGuess}"`
+            game.makeGuess(userGuess);
             winsDisp.innerHTML = "<p>" + game.wins + "</p>";
             currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
             guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-        } else if (!game.checkRemainingGuesses()) {
-            alert("You are out of guesses! Play again!");
-            game.main();
-            winsDisp.innerHTML = "<p>" + game.wins + "</p>";
-            currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
-            guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+            if (game.checkForWin()) {
+                game.wins += 1;
+                game.main();
+                winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+                currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+                guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+            } else if (!game.checkRemainingGuesses()) {
+                alert("You are out of guesses! Play again!");
+                game.main();
+                winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+                currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+                guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+            }
+        } else {
+            alert(userGuess + " is not a letter. Please try again :)")
         }
+
     }
     // random stuff for testing
     // var word = "dogg";
