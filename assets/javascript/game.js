@@ -138,6 +138,7 @@ var guessesDisp = document.getElementById("guessesDisp");
 var subHeaderDisp = document.getElementById("sub-header-text")
 var button = document.getElementById("input-button")
 var userInput = document.getElementById("user-input")
+var inputForm = document.getElementById("input-form")
 
 game.main();
 
@@ -145,7 +146,18 @@ winsDisp.innerHTML += "<p>" + game.wins + "</p>";
 currWordDisp.innerHTML += "<p>" + game.correctGuesses.join(" ") + "</p>";
 guessesDisp.innerHTML += "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
 
-// document.onkeyup = function(event) {
+// button.addEventListener("keyup", function(event) {
+
+//     })
+
+document.onkeyup = function(event) {
+        if (event.keyCode === 13) {
+            button.click();
+        }
+
+        event.preventDefault();
+    }
+    // document.onkeyup = function(event) {
 button.onclick = function() {
         var userGuess = userInput.value;
         console.log(userGuess)
