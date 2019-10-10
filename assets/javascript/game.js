@@ -62,14 +62,18 @@ function allLetter(inputtxt) {
 
 // main game object
 var game = {
-    wordList: ["twice", "itzy", "blackpink", "red velvet", "mamamoo", "heize", "hyuna", "exid", "aoa", "apink", "sistar", "hwasa", "jennie", "jisoo", "lisa", "jihyo", "naeun", "mina", "sana", "tzuyu", "momo", "dahyun", "chaeyoung", "nayeon", "jeongyeon"],
+    wordList: idols,
     currentWord: "",
     correctGuesses: [],
     wins: 0,
     remainingGuesses: 12,
     lettersAlreadyGuessed: [],
+    pastWords: [],
+    currentIdol: "",
     setNewCurrentWord: function() {
-        this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)]
+        var num = Math.floor(Math.random() * this.wordList.length)
+        this.currentWord = this.wordList[num].name
+        this.currentIdol = this.wordList[num]
         console.log("new currentWord is", this.currentWord)
     },
     setRemainingGuesses: function() {
@@ -109,7 +113,13 @@ var game = {
     },
     checkForWin: function() {
         if (this.currentWord === this.correctGuesses.join("")) {
+            if (this.wins === 0) {
+                pastWordsDiv.innerHTML += '<div class="row p-3 card-title"><h2>Past Words!</h2></div>'
+            }
             alert("You win! The word was " + this.currentWord)
+            this.pastWords.push(this.currentIdol)
+            pastWordsDiv.innerHTML += ' <div class = " p-3 col-md-4" > <p class="font-weight-bold"> ' + game.pastWords[game.pastWords.length - 1].displayName + ' </p><div class p-3 col-md-8>' + game.pastWords[game.pastWords.length - 1].embed + '</div></div>'
+
             return true;
         } else {
             return false;
@@ -139,6 +149,7 @@ var subHeaderDisp = document.getElementById("sub-header-text")
 var button = document.getElementById("input-button")
 var userInput = document.getElementById("user-input")
 var inputForm = document.getElementById("input-form")
+var pastWordsDiv = document.getElementById("past-words")
 
 game.main();
 
@@ -159,6 +170,7 @@ document.onkeyup = function(event) {
     }
     // document.onkeyup = function(event) {
 button.onclick = function() {
+
         var userGuess = userInput.value;
         console.log(userGuess)
         if (allLetter(userGuess)) {
