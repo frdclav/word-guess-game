@@ -50,7 +50,7 @@ function addNewGuessedLetters(x, y, z) {
 function allLetter(inputtxt) {
     var letters = /^[A-Za-z]+$/;
     var check = String(inputtxt);
-    console.log(inputtxt, inputtxt.type)
+    // console.log(inputtxt, inputtxt.type)
     if (check.match(letters) && check.length === 1) {
         console.log(inputtxt, "is a letter")
         return true;
@@ -70,17 +70,17 @@ var game = {
     lettersAlreadyGuessed: [],
     pastWords: [],
     currentIdol: "",
-    setNewCurrentWord: function() {
+    setNewCurrentWord: function () {
         var num = Math.floor(Math.random() * this.wordList.length)
         this.currentWord = this.wordList[num].name
         this.currentIdol = this.wordList[num]
         console.log("new currentWord is", this.currentWord)
     },
-    setRemainingGuesses: function() {
+    setRemainingGuesses: function () {
         this.remainingGuesses = 9
         console.log("new remainingGuesses is", this.remainingGuesses)
     },
-    setNewCorrectGuesses: function() {
+    setNewCorrectGuesses: function () {
         this.correctGuesses = []
         for (let index = 0; index < this.currentWord.length; index++) {
             const element = this.currentWord[index];
@@ -89,10 +89,10 @@ var game = {
         }
         console.log("new correctGuesses are:", this.correctGuesses)
     },
-    setNewLettersGuessed: function() {
+    setNewLettersGuessed: function () {
         this.lettersAlreadyGuessed = [];
     },
-    makeGuess: function(x) {
+    makeGuess: function (x) {
         if (this.lettersAlreadyGuessed.includes(x)) {
             console.log(x, "has already been guessed");
             alert(x, "has already been guessed");
@@ -111,33 +111,41 @@ var game = {
         }
 
     },
-    checkForWin: function() {
+    checkForWin: function () {
         if (this.currentWord === this.correctGuesses.join("")) {
-            if (this.wins === 0) {
-                pastWordsDiv.innerHTML += '<div class="row p-3 card-title"><h2>Past Words!</h2></div>'
-            }
-            alert("You win! The word was " + this.currentWord)
-            this.pastWords.push(this.currentIdol)
-            pastWordsDiv.innerHTML += ' <div class = " p-3 col-md-4" > <p class="font-weight-bold"> ' + game.pastWords[game.pastWords.length - 1].displayName + ' </p><div class p-3 col-md-8>' + game.pastWords[game.pastWords.length - 1].embed + '</div></div>'
-
-            return true;
+            this.forceWin();
         } else {
             return false;
         }
     },
-    main: function() {
+    main: function () {
         this.setNewCurrentWord();
         this.setRemainingGuesses();
         this.setNewCorrectGuesses();
         this.setNewLettersGuessed();
     },
-    checkRemainingGuesses: function() {
+    checkRemainingGuesses: function () {
         if (this.remainingGuesses < 1) {
             return false
         } else {
             return true
         }
-    }
+    },
+    forceWin: function () {
+        if (this.wins === 0) {
+            console.log("HERE")
+            pastWordsDiv.insertAdjacentHTML('afterbegin', '<h2 class="row p-3 card-title" id="past-words-title">Past Words:</h2>')
+
+        }
+        var pastWordsTitle = document.getElementById("past-words-title")
+        console.log("You win! The word was " + this.currentWord)
+        alert("You win! The word was " + this.currentWord)
+
+        this.pastWords.push(this.currentIdol)
+        pastWordsTitle.insertAdjacentHTML("afterend", ' <div class = " p-3 row" > <p class="font-weight-bold"> ' + game.pastWords[game.pastWords.length - 1].displayName + ' </p></div><div class ="p-3 row">' + game.pastWords[game.pastWords.length - 1].embed + '</div>')
+
+        return true;
+    },
 };
 
 console.log(game);
@@ -161,42 +169,49 @@ guessesDisp.innerHTML += "<p>Remaining guesses: " + game.remainingGuesses + "</p
 
 //     })
 
-document.onkeyup = function(event) {
-        if (event.keyCode === 13) {
-            button.click();
-        }
-
-        event.preventDefault();
+document.onkeyup = function (event) {
+    if (event.keyCode === 13) {
+        button.click();
     }
-    // document.onkeyup = function(event) {
-button.onclick = function() {
 
-        var userGuess = userInput.value;
-        console.log(userGuess)
-        if (allLetter(userGuess)) {
-            subHeaderDisp.textContent = `You guessed "${userGuess}"`
-            game.makeGuess(userGuess);
+    event.preventDefault();
+}
+// document.onkeyup = function(event) {
+button.onclick = function () {
+
+    var userGuess = userInput.value.toLowerCase();
+    // console.log(userGuess)
+    if (allLetter(userGuess)) {
+        subHeaderDisp.textContent = `You guessed "${userGuess}"`
+        game.makeGuess(userGuess);
+        winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+        currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+        guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+        if (game.checkForWin()) {
+            game.wins += 1;
+            game.main();
             winsDisp.innerHTML = "<p>" + game.wins + "</p>";
             currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
             guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-            if (game.checkForWin()) {
-                game.wins += 1;
-                game.main();
-                winsDisp.innerHTML = "<p>" + game.wins + "</p>";
-                currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
-                guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-            } else if (!game.checkRemainingGuesses()) {
-                alert("You are out of guesses! Play again!");
-                game.main();
-                winsDisp.innerHTML = "<p>" + game.wins + "</p>";
-                currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
-                guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
-            }
-        } else {
-            alert(userGuess + " is not a letter. Please try again :)")
+        } else if (!game.checkRemainingGuesses()) {
+            alert("You are out of guesses! Play again!");
+            game.main();
+            winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+            currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+            guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
         }
-        userInput.value = ''
+    } else if (userGuess === game.currentWord) {
+        game.forceWin();
+        game.wins += 1;
+        game.main();
+        winsDisp.innerHTML = "<p>" + game.wins + "</p>";
+        currWordDisp.innerHTML = "<p>" + game.correctGuesses.join(" ") + "</p>";
+        guessesDisp.innerHTML = "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
+    } else {
+        alert(userGuess + " is not a valid guess. Please try again :)")
     }
+    userInput.value = ''
+}
     // random stuff for testing
     // var word = "dogg";
     // var correct_guesses = "____";

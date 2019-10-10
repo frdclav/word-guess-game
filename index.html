@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-js mx-auto px-auto ">
 <!--<![endif]-->
 
 <head>
@@ -13,58 +13,78 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
-<body id="body-disp">
-    <div class="container mx-auto">
+<body id="body-disp mx-auto p-2 ">
+    <div class="container mx-auto ">
+
         <div class="row header">
+
             <div class="col-md-12">
+
                 <h1 class="text-center">KPOP HANGMAN :3</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="sub-header">
-                <h3 id="sub-header-text">Press any key to guess that letter! If you make more than 9 wrong guesses before guessing the whole word, you lose.</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class=" card col-6 p-4">
-
-                <h2 class="">Current Word</h2>
-                <p id="currWordDisp"></p>
 
             </div>
-            <div class="card p-4 col-6 ">
-                <form onSubmit="return false" id="input-form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="user-input" placeholder="Input your guess here!">
-                        <button type='button' class="btn btn-primary my-2" id="input-button">Submit</button>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 text-center" id="sub-header">
+
+                <h6 id="sub-header-tex">Press any key to guess that letter! If you make more than 9 wrong guesses
+                    before guessing the whole word, you lose.</h3>
+
+            </div>
+
+        </div>
+
+        <div class="row containter-fluid">
+
+            <div class="col-md-4 card">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center">Current Word</h2>
+                        <p class="text-center" id="currWordDisp"></p>
+                        <div class="text-center col-12">
+                            <form onSubmit="return false" id="input-form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="user-input" placeholder="GUESS HERE!">
+                                    <button type='button' class="btn btn-dark my-2" id="input-button">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2 class="">Guesses</h2>
+                        <p id="guessesDisp"></p>
+                        <h2 class="">Wins</h2>
+                        <p id="winsDisp"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 card containter-fluid">
+                <div class="card-body" id="past-words"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="card p-4 col-6">
-                <h2 class="">Wins</h2>
-                <p id="winsDisp"></p>
-            </div>
 
-            <div class="card p-4 col-6">
-                <h2 class="">Guesses</h2>
-                <p id="guessesDisp"></p>
-            </div>
-        </div>
-        <div class="row card" id="past-words">
-
-        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script src="assets/javascript/idols.js" async defer></script>
 
     <script src="assets/javascript/game.js" async defer></script>
