@@ -113,7 +113,7 @@ var game = {
     },
     checkForWin: function () {
         if (this.currentWord === this.correctGuesses.join("")) {
-            this.forceWin();
+            return this.forceWin();
         } else {
             return false;
         }
