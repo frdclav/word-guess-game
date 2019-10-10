@@ -91,6 +91,7 @@ var game = {
     makeGuess: function(x) {
         if (this.lettersAlreadyGuessed.includes(x)) {
             console.log(x, "has already been guessed");
+            alert(x, "has already been guessed");
         } else if (this.currentWord.includes(x)) {
             console.log(x, "is included in the currentWord.");
             this.lettersAlreadyGuessed.push(x);
@@ -135,6 +136,8 @@ var winsDisp = document.getElementById("winsDisp");
 var currWordDisp = document.getElementById("currWordDisp");
 var guessesDisp = document.getElementById("guessesDisp");
 var subHeaderDisp = document.getElementById("sub-header-text")
+var button = document.getElementById("input-button")
+var userInput = document.getElementById("user-input")
 
 game.main();
 
@@ -142,8 +145,10 @@ winsDisp.innerHTML += "<p>" + game.wins + "</p>";
 currWordDisp.innerHTML += "<p>" + game.correctGuesses.join(" ") + "</p>";
 guessesDisp.innerHTML += "<p>Remaining guesses: " + game.remainingGuesses + "</p><p>Letters guessed: " + game.lettersAlreadyGuessed + "</p>";
 
-document.onkeyup = function(event) {
-        var userGuess = event.key;
+// document.onkeyup = function(event) {
+button.onclick = function() {
+        var userGuess = userInput.value;
+        console.log(userGuess)
         if (allLetter(userGuess)) {
             subHeaderDisp.textContent = `You guessed "${userGuess}"`
             game.makeGuess(userGuess);
@@ -166,7 +171,7 @@ document.onkeyup = function(event) {
         } else {
             alert(userGuess + " is not a letter. Please try again :)")
         }
-
+        userInput.value = ''
     }
     // random stuff for testing
     // var word = "dogg";
