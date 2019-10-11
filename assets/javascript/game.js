@@ -202,14 +202,14 @@ button.onclick = function () {
             game.gamesPlayed += 1;
             newGame();
         } else if (!game.checkRemainingGuesses()) {
-            alert("You are out of guesses! The word was " + this.currentWord + " Play again!");
-            console.log("You lose! The word was " + this.currentWord)
+            alert("You are out of guesses! The word was " + game.currentWord + " Play again!");
+            console.log("You lose! The word was " + game.currentWord)
             newGame();
             game.gamesPlayed += 1;
         }
     } else if (userGuess === game.currentWord) {
-        console.log("You win! The word was " + this.currentWord)
-        alert("You win! The word was " + this.currentWord)
+        console.log("You win! The word was " + game.currentWord)
+        alert("You win! The word was " + game.currentWord)
         game.forceWin();
         game.wins += 1;
         game.gamesPlayed += 1;
